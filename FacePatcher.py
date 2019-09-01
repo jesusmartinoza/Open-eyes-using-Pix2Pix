@@ -2,7 +2,9 @@ import cv2
 import numpy as np
 import dlib
 import imutils
+from color_transfer import color_transfer
 from math import atan2,degrees
+from PIL import Image
 
 class FacePatcher:
     """
@@ -16,12 +18,30 @@ class FacePatcher:
 
     def __init__(self, picture_input, target_face, test = False):
         """
-        Read images from paths and init patching
+        Read images from paths and init patching.
+
+        First transfer picture style using
+        https://github.com/jrosebr1/color_transfer
         """
         self.picture_input = cv2.imread(picture_input)
         self.target_face = cv2.imread(target_face)
         self.test = test
+
+        if not self.is_greyscale(picture_input):
+            self.target_face = color_transfer(self.picture_input, self.target_face)
         self.initPatching()
+
+    def is_greyscale(self, img_path):
+        """
+        https://stackoverflow.com/questions/23660929/how-to-check-whether-a-jpeg-image-is-color-or-gray-scale-using-only-python-stdli
+        """
+        img = Image.open(img_path).convert('RGB')
+        w,h = img.size
+        for i in range(w):
+            for j in range(h):
+                r,g,b = img.getpixel((i,j))
+                if r != g != b: return False
+        return True
 
     def overlay_image_alpha(self, img_overlay, pos, alpha_mask):
         """
