@@ -2,150 +2,159 @@ import cv2
 import numpy as np
 import dlib
 
-"""
-This file receive picture_1 and target_face.
-The goal is to extract eyes of target_face and patch them in picture_1
-"""
-def overlay_image_alpha(img, img_overlay, pos, alpha_mask):
+class FacePatcher:
     """
-    Overlay img_overlay on top of img at the position specified by
-    pos and blend using alpha_mask.
-
-    Alpha mask must contain values within the range [0, 1] and be the
-    same size as img_overlay.
+    This file receive picture_input and target_face.
+    The goal is to extract eyes of target_face and patch them in picture_input
     """
+    detector = dlib.get_frontal_face_detector()
+    predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 
-    x, y = pos
+    def __init__(self, picture_input, target_face, test = False):
+        """
+        Read images from paths and init patching
+        """
+        self.picture_input = cv2.imread(picture_input)
+        self.target_face = cv2.imread(target_face)
+        self.test = test
+        self.initPatching()
 
-    # Image ranges
-    y1, y2 = max(0, y), min(img.shape[0], y + img_overlay.shape[0])
-    x1, x2 = max(0, x), min(img.shape[1], x + img_overlay.shape[1])
+    def overlay_image_alpha(self, img_overlay, pos, alpha_mask):
+        """
+        Overlay img_overlay on top of img at the position specified by
+        pos and blend using alpha_mask.
 
-    # Overlay ranges
-    y1o, y2o = max(0, -y), min(img_overlay.shape[0], img.shape[0] - y)
-    x1o, x2o = max(0, -x), min(img_overlay.shape[1], img.shape[1] - x)
+        Alpha mask must contain values within the range [0, 1] and be the
+        same size as img_overlay.
+        """
+        img = self.picture_input
+        x, y = pos
 
-    # Exit if nothing to do
-    if y1 >= y2 or x1 >= x2 or y1o >= y2o or x1o >= x2o:
-        return
+        # Image ranges
+        y1, y2 = max(0, y), min(img.shape[0], y + img_overlay.shape[0])
+        x1, x2 = max(0, x), min(img.shape[1], x + img_overlay.shape[1])
 
-    channels = img.shape[2]
+        # Overlay ranges
+        y1o, y2o = max(0, -y), min(img_overlay.shape[0], img.shape[0] - y)
+        x1o, x2o = max(0, -x), min(img_overlay.shape[1], img.shape[1] - x)
 
-    alpha = alpha_mask[y1o:y2o, x1o:x2o]
-    alpha_inv = 1.0 - alpha
+        # Exit if nothing to do
+        if y1 >= y2 or x1 >= x2 or y1o >= y2o or x1o >= x2o:
+            return
 
-    for c in range(channels):
-        img[y1:y2, x1:x2, c] = (alpha * img_overlay[y1o:y2o, x1o:x2o, c] +
-                                alpha_inv * img[y1:y2, x1:x2, c])
+        channels = img.shape[2]
 
-def midpoint(p1 ,p2):
-    return int((p1.x + p2.x)/2), int((p1.y + p2.y)/2)
+        alpha = alpha_mask[y1o:y2o, x1o:x2o]
+        alpha_inv = 1.0 - alpha
 
-def extract_left_eye(face, landmarks):
-    left_point = (landmarks.part(36).x, landmarks.part(36).y)
-    right_point = (landmarks.part(39).x, landmarks.part(39).y)
-    center_top = midpoint(landmarks.part(37), landmarks.part(38))
-    center_bottom = midpoint(landmarks.part(41), landmarks.part(40))
+        for c in range(channels):
+            img[y1:y2, x1:x2, c] = (alpha * img_overlay[y1o:y2o, x1o:x2o, c] +
+                                    alpha_inv * img[y1:y2, x1:x2, c])
 
-    # Crop [x:w, y:h]
-    # crop_img = img[y:y+h, x:x+w]
-    print(left_point, right_point, center_top , center_bottom)
-    x = landmarks.part(36).x
-    y = landmarks.part(37).y
-    w = landmarks.part(39).x - x
-    h = landmarks.part(40).y - y
+    def extract_left_eye(self, face, landmarks):
+        x = landmarks.part(36).x
+        y = landmarks.part(37).y
+        w = landmarks.part(39).x - x
+        h = landmarks.part(40).y - y
 
-    offset = int(w / 5)
-    x -= offset
-    y -= offset
-    w += offset * 2
-    h += offset * 2
+        padding = int(w / 5)
+        x -= padding
+        y -= padding
+        w += padding * 2
+        h += padding * 2
 
-    eye = face[y:y+h, x:x+w].copy()
+        # Crop [y:y+h, x:x+w]
+        #print(left_point, right_point, center_top , center_bottom)
+        eye = face[y:y+h, x:x+w].copy()
 
-    return cv2.cvtColor(eye, cv2.COLOR_RGB2RGBA).copy(), w, h
+        return cv2.cvtColor(eye, cv2.COLOR_RGB2RGBA).copy(), w, h, padding
 
-detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
+    def extract_right_eye(self, face, landmarks):
+        x = landmarks.part(42).x
+        y = landmarks.part(43).y
+        w = landmarks.part(45).x - x
+        h = landmarks.part(46).y - y
 
-picture_1 = cv2.imread('people1.jpg')
-target_face = cv2.imread('people2.jpg')
-#target_face = cv2.cvtColor(target_face, cv2.COLOR_RGB2RGBA).copy()
+        padding = int(w / 5)
+        x -= padding
+        y -= padding
+        w += padding * 2
+        h += padding * 2
 
-# Make pictures gray
-picture_gray = cv2.cvtColor(picture_1, cv2.COLOR_BGR2GRAY)
-target_face_gray = cv2.cvtColor(target_face, cv2.COLOR_BGR2GRAY)
+        # Crop [y:y+h, x:x+w]
+        #print(left_point, right_point, center_top , center_bottom)
+        eye = face[y:y+h, x:x+w].copy()
 
-# Get faces of the picture_1
-faces = detector(target_face_gray)
+        return cv2.cvtColor(eye, cv2.COLOR_RGB2RGBA).copy(), w, h, padding
 
-for face in faces:
-    x1 = face.left()
-    y1 = face.top()
-    x2 = face.right()
-    y2 = face.bottom()
-    #cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 3)
+    def initPatching(self):
+        # Make pictures gray
+        picture_gray = cv2.cvtColor(self.picture_input, cv2.COLOR_BGR2GRAY)
+        target_face_gray = cv2.cvtColor(self.target_face, cv2.COLOR_BGR2GRAY)
 
-    landmarks = predictor(target_face_gray, face)
-    left_eye, le_w, le_h = extract_left_eye(target_face, landmarks)
+        # Get first detected face of target_face
+        faces = FacePatcher.detector(target_face_gray)
+        if len(faces) == 0:
+            raise ValueError('Not detected face in target image')
 
-    # Landmarks for eyes
-    # - Left eye points: 36, 37, 38, 39, 40, 41
-    # - Right eye points: 42, 43, 44, 45, 46, 47
-    # Reference: https://pysource.com/wp-content/uploads/2019/06/landmarks_points_eyes.png
-    for n in range(0, 68):
-        x = landmarks.part(n).x
-        y = landmarks.part(n).y
+        # Landmarks for eyes
+        # - Left eye points: 36, 37, 38, 39, 40, 41
+        # - Right eye points: 42, 43, 44, 45, 46, 47
+        # Reference: https://pysource.com/wp-content/uploads/2019/06/landmarks_points_eyes.png
+        landmarks = FacePatcher.predictor(target_face_gray, faces[0])
+        left_eye, le_w, le_h, le_p = self.extract_left_eye(self.target_face, landmarks)
+        right_eye, ri_w, ri_h, re_p = self.extract_right_eye(self.target_face, landmarks)
 
-        # Left eye
-        if n in range(36, 42):
-            cv2.circle(target_face, (x, y), 4, (255, 0, 0), -1)
+        # Get faces of the self.picture_input
+        faces = FacePatcher.detector(picture_gray)
 
-        # Right eye
-        if n in range(42, 48):
-           cv2.circle(target_face, (x, y), 4, (255, 0, 0), -1)
+        # Iterate in picture to find the face with the closest eyes
+        prev_eye_height = float("inf") # A very opened eye
 
+        for idx, face in enumerate(faces):
+            landmarks = FacePatcher.predictor(picture_gray, face)
+            eye_height = landmarks.part(41).y - landmarks.part(37).y
 
-# Get faces of the picture_1
-faces = detector(picture_gray)
+            if eye_height < prev_eye_height:
+                face_to_change = idx
 
-for face in faces:
-    x1 = face.left()
-    y1 = face.top()
-    x2 = face.right()
-    y2 = face.bottom()
-    #cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 3)
+        landmarks = FacePatcher.predictor(picture_gray, faces[face_to_change])
+        l_eye_x = landmarks.part(36).x
+        l_eye_w = landmarks.part(39).x - l_eye_x
+        l_eye_y = landmarks.part(41).y
 
-    landmarks = predictor(picture_gray, face)
-    eye_x = landmarks.part(36).x
-    eye_y = landmarks.part(37).y
-    eye_w = landmarks.part(39).x - eye_x
-    eye_h = landmarks.part(40).y - eye_y
-    offset = int(eye_w / 6)
+        r_eye_x = landmarks.part(42).x
+        r_eye_w = landmarks.part(45).x - r_eye_x
+        r_eye_y = landmarks.part(47).y
 
-    print('extracted_w: ' + str(le_w) + ' target_w: ' + str(eye_w))
-    print('extracted_h: ' + str(le_h) + ' target_h: ' + str(eye_h))
-    w_ratio = le_w / eye_w
-    h_ratio = le_h / eye_h
-    left_eye = cv2.resize(left_eye, None, fx = w_ratio * 1.1, fy = w_ratio * 1.1)
+        w_ratio = l_eye_w / (le_w - le_p * 2)
+        left_eye = cv2.resize(left_eye, None, fx = w_ratio, fy = w_ratio)
+        right_eye = cv2.resize(right_eye, None, fx = w_ratio, fy = w_ratio)
 
-    overlay_image_alpha(picture_1,
-                       left_eye[:, :, 0:3],
-                       (eye_x - offset, eye_y - offset * 2),
-                       left_eye[:, :, 3] / 255.0)
+        self.overlay_image_alpha(left_eye[:, :, 0:3],
+                           (l_eye_x - le_p, l_eye_y - left_eye.shape[0] + le_p),
+                           left_eye[:, :, 3] / 255.0)
 
-    for n in range(0, 68):
-        x = landmarks.part(n).x
-        y = landmarks.part(n).y
+        self.overlay_image_alpha(right_eye[:, :, 0:3],
+                          (r_eye_x - re_p, r_eye_y - right_eye.shape[0] + re_p),
+                          right_eye[:, :, 3] / 255.0)
 
-        # Left eye
-        if n in range(36, 42):
-            cv2.circle(picture_1, (x, y), 4, (255, 0, 0), -1)
+        if self.test: # Draw eye landmarks
+            for n in range(0, 68):
+                x = landmarks.part(n).x
+                y = landmarks.part(n).y
 
-        # Right eye
-        if n in range(42, 48):
-           cv2.circle(picture_1, (x, y), 4, (255, 0, 0), -1)
+                # Left eye
+                if n in range(36, 42):
+                    cv2.circle(self.picture_input, (x, y), 4, (255, 0, 0), -1)
 
-cv2.imshow('my image',picture_1)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+                # Right eye
+                if n in range(42, 48):
+                   cv2.circle(self.picture_input, (x, y), 4, (255, 0, 0), -1)
+
+        cv2.imshow('my image',self.picture_input)
+        #cv2.imwrite('test.png',self.picture_input)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+FacePatcher("people1.jpg", "people2.jpg")
