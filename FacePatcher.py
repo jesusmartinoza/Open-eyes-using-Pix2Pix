@@ -84,6 +84,9 @@ class FacePatcher:
         # Crop [y:y+h, x:x+w]
         eye = face[y:y+h, x:x+w].copy()
 
+        if len(eye) == 0:
+            raise ValueError('No left eye detected')
+
         return cv2.cvtColor(eye, cv2.COLOR_RGB2RGBA).copy(), w, h, padding
 
     def extract_right_eye(self, face, landmarks):
@@ -100,6 +103,9 @@ class FacePatcher:
 
         # Crop [y:y+h, x:x+w]
         eye = face[y:y+h, x:x+w].copy()
+
+        if len(eye) == 0:
+            raise ValueError('No right eye detected')
 
         return cv2.cvtColor(eye, cv2.COLOR_RGB2RGBA).copy(), w, h, padding
 
@@ -134,7 +140,6 @@ class FacePatcher:
         since I don't have time because #RetoDotCSV2080Super deadline is in 2 weeks!
         TODO: Clean this function
         """
-        print("Init patching...")
         # Make pictures gray
         picture_gray = cv2.cvtColor(self.picture_input, cv2.COLOR_BGR2GRAY)
         target_face_gray = cv2.cvtColor(self.target_face, cv2.COLOR_BGR2GRAY)
