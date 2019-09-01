@@ -85,7 +85,7 @@ class FacePatcher:
         eye = face[y:y+h, x:x+w].copy()
 
         if len(eye) == 0:
-            raise ValueError('No left eye detected')
+            raise AttributeError('No left eye detected')
 
         return cv2.cvtColor(eye, cv2.COLOR_RGB2RGBA).copy(), w, h, padding
 
@@ -105,7 +105,7 @@ class FacePatcher:
         eye = face[y:y+h, x:x+w].copy()
 
         if len(eye) == 0:
-            raise ValueError('No right eye detected')
+            raise AttributeError('No right eye detected')
 
         return cv2.cvtColor(eye, cv2.COLOR_RGB2RGBA).copy(), w, h, padding
 

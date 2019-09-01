@@ -13,4 +13,10 @@ for idx, f in enumerate(closed_eyes_files):
 
             f.save_result("generated_data/face_" + str(idx) + ".jpg")
         except ValueError as err:
+            a = 2
+        except AttributeError as err:
+            f = FacePatcher("closed_eyes_dataset/" + f,
+                            "regular_faces/" + faces_files[random.randint(1,len(faces_files)-1)])
+
+            f.save_result("generated_data/face_" + str(idx) + ".jpg")
             print(err)
