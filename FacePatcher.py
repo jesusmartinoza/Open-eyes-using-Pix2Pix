@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 import dlib
+import imutils
+from math import atan2,degrees
 
 class FacePatcher:
     """
@@ -52,6 +54,20 @@ class FacePatcher:
         for c in range(channels):
             img[y1:y2, x1:x2, c] = (alpha * img_overlay[y1o:y2o, x1o:x2o, c] +
                                     alpha_inv * img[y1:y2, x1:x2, c])
+
+    def calculate_eyes_angle(self, landmarks):
+        """
+        SOHCAHTOA
+        """
+        l_delta_X = landmarks.part(39).x - landmarks.part(36).x
+        l_delta_Y = landmarks.part(39).y - landmarks.part(36).y
+        l_angle = degrees(atan2(l_delta_Y, l_delta_X))
+
+        r_delta_X = landmarks.part(45).x - landmarks.part(42).x
+        r_delta_Y = landmarks.part(45).y - landmarks.part(42).y
+        r_angle = degrees(atan2(r_delta_Y, r_delta_X))
+
+        return (l_angle, r_angle)
 
     def extract_left_eye(self, face, landmarks):
         x = landmarks.part(36).x
@@ -162,6 +178,12 @@ class FacePatcher:
         left_eye = cv2.resize(left_eye, None, fx = w_ratio, fy = w_ratio)
         right_eye = cv2.resize(right_eye, None, fx = w_ratio, fy = w_ratio)
 
+        # Rotate eyes to correct angle
+        l_angle, r_angle = self.calculate_eyes_angle(landmarks)
+        left_eye = imutils.rotate_bound(left_eye, l_angle)
+        right_eye = imutils.rotate_bound(right_eye, r_angle)
+
+        # Overlay eyes
         self.overlay_image_alpha(left_eye[:, :, 0:3],
                            (l_eye_x - le_p, l_eye_y - left_eye.shape[0] + le_p),
                            left_eye[:, :, 3] / 255.0)
