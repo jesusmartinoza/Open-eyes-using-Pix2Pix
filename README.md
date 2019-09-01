@@ -2,7 +2,7 @@
 <p>
   <img src="https://img.shields.io/badge/version-0.1-blue.svg?cacheSeconds=2592000" />
 </p>
-Have you ever had the perfect picture but closed your eyes? 🤦 It's a very common problem, the solution is go to Photoshop and edit the picture there.... But why not let an AI do it for us?
+Have you ever had the perfect picture but closed your eyes? 🤦 It's a very common problem, you can fix it by going to Photoshop and editing the picture there.... But why not let an AI to do the hard work for us?
 
 
 ### Author
