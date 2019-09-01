@@ -6,6 +6,8 @@ class FacePatcher:
     """
     This file receive picture_input and target_face.
     The goal is to extract eyes of target_face and patch them in picture_input
+
+    @author: Jesús Alberto Martínez Mendoza
     """
     detector = dlib.get_frontal_face_detector()
     predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
@@ -102,14 +104,19 @@ class FacePatcher:
 
     def initPatching(self):
         """
-        DISCLAIMER: This function is a little messy :sweat_smile:
-        TODO: Clean this function
+        Main function of FacePatcher.
+        It extracts eyes from target_face and patch them in picture_input.
 
         Landmarks for eyes
         - Left eye points: 36, 37, 38, 39, 40, 41
         - Right eye points: 42, 43, 44, 45, 46, 47
 
-        Reference: https://pysource.com/wp-content/uploads/2019/06/landmarks_points_eyes.png
+        For a detailed image please visit:
+        https://pysource.com/wp-content/uploads/2019/06/landmarks_points_eyes.png
+
+        DISCLAIMER: This function is a little messy 😅 Eventually I will clean it
+        since I don't have time because #RetoDotCSV2080Super deadline is in 2 weeks!
+        TODO: Clean this function
         """
         print("Init patching...")
         # Make pictures gray
