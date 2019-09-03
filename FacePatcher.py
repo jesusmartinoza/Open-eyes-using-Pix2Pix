@@ -27,7 +27,7 @@ class FacePatcher:
         self.target_face = cv2.imread(target_face)
         self.test = test
 
-        if not self.is_greyscale(picture_input):
+        if not self.is_greyscale(picture_input) and not self.is_greyscale(target_face):
             self.target_face = color_transfer(self.picture_input, self.target_face)
         self.initPatching()
 

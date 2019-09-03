@@ -1,4 +1,5 @@
 .DS_Store
 venv/
-generated_data/
 __pycache__
+generated_data/
+generated_fixed/
