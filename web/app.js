@@ -23,10 +23,14 @@ class Steps{
   }
 
   handleStepsClasses(movement){
-    if(movement > 0)
+    if(movement > 0) {
+      this.steps[this.currentStep].classList.add('-active');
       this.steps[this.currentStep - 1].classList.add('-completed');
-    else if(movement < 0)
+    }
+    else if(movement < 0) {
+      this.steps[this.currentStep + 1].classList.remove('-active');
       this.steps[this.currentStep].classList.remove('-completed');
+    }
   }
 }
 
@@ -55,7 +59,7 @@ class Panels{
   }
 
   updatePanelsContainerHeight(){
-    this.panelsContainer.style.height = this.getCurrentPanelHeight();
+    this.panelsContainer.style.height = '370px';
   }
 
   updatePanelsPosition(currentStep){
@@ -116,7 +120,7 @@ class Wizard{
 
   handleNextStepButton(){
     if(this.currentStep === this.stepsQuantity - 1){
-      this.nextControl.innerHTML = 'Init again!';
+      this.nextControl.innerHTML = 'Conclude!';
 
       this.nextControl.removeEventListener('click', this.nextControlMoveStepMethod);
       this.nextControl.addEventListener('click', this.concludeControlMoveStepMethod);
@@ -132,10 +136,6 @@ class Wizard{
 
   handleWizardConclusion(){
     this.wizard.classList.add('completed');
-
-    setTimeout(function() {
-      this.wizard.classList.remove('completed');
-    }, 3000)
   };
 
   addControls(previousControl, nextControl){
@@ -173,3 +173,36 @@ let buttonNext = document.querySelector('.next');
 let buttonPrevious = document.querySelector('.previous');
 
 wizard.addControls(buttonPrevious, buttonNext);
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('.image-upload-wrap').hide();
+
+      $('.file-upload-image').attr('src', e.target.result);
+      $('.file-upload-content').show();
+
+      $('.image-title').html(input.files[0].name);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+
+  } else {
+    removeUpload();
+  }
+}
+
+function removeUpload() {
+  $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+  $('.file-upload-content').hide();
+  $('.image-upload-wrap').show();
+}
+$('.image-upload-wrap').bind('dragover', function () {
+		$('.image-upload-wrap').addClass('image-dropping');
+	});
+	$('.image-upload-wrap').bind('dragleave', function () {
+		$('.image-upload-wrap').removeClass('image-dropping');
+});
