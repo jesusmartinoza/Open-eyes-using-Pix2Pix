@@ -4,9 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="main.css">
-  <script src="https://kit.fontawesome.com/951b0c7d25.js"></script>
-
   <title>Open eyes App</title>
 </head>
 
@@ -18,7 +17,7 @@
           <div class="wizard__header-overlay"></div>
 
           <div class="wizard__header-content">
-            <h1 class="wizard__title" >Get start with Javascript!</h1>
+            <h1 class="wizard__title" >Open eyes using Deep Learning</h1>
             <p class="wizard__subheading">Start with <span>3</span> simple steps.</p>
           </div>
 
@@ -89,14 +88,13 @@
           <div class="panel">
               <header class="panel__header">
                 <h2 class="panel__title">Pick your closed eyes picture 😽</h2>
-                <p class="panel__subheading">With github you can show your projects and find new things everyday!</p>
               </header>
 
               <div class="file-upload">
                 <div class="image-upload-wrap">
                   <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
                   <div class="drag-text">
-                    <h3>Drag and drop a file or select add Image</h3>
+                    <p>Drag and drop a file or click to add image</p>
                   </div>
                 </div>
                 <div class="file-upload-content">
@@ -111,13 +109,21 @@
           <div class="panel">
              <header class="panel__header">
                <h2 class="panel__title"><b>Great!</b> Now pick the eyes you want 👀</h2>
+               <p class="panel__subheading">No pictures of yourself? Don't worry you can use one these samples</p>
              </header>
+
+             <div class="row">
+               <div class="col-md-3"><img src="" alt="" class="sample-image"></div>
+               <div class="col-md-3"><img src="" alt="" class="sample-image"></div>
+               <div class="col-md-3"><img src="" alt="" class="sample-image"></div>
+               <div class="col-md-3"><img src="" alt="" class="sample-image"></div>
+             </div>
 
              <div class="file-upload">
                <div class="image-upload-wrap">
                  <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
                  <div class="drag-text">
-                   <h3>Drag and drop a file or select add Image</h3>
+                   <p>Drag and drop a file or click to add image</p>
                  </div>
                </div>
                <div class="file-upload-content">
@@ -144,18 +150,17 @@
       </div>
       </div>
 
-      <h1 class="wizard__congrats-message">
-        Congratulations, you are now in a world of pain and suffering!
-      </h1>
+      <p class="wizard__congrats-message">
+      </p>
     </div>
   </div>
 
+  <script src="https://kit.fontawesome.com/951b0c7d25.js"></script>
 
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+  crossorigin="anonymous"></script>
+  <script type="text/javascript" src="app.js"></script>
 </body>
-
-<script
-src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
-crossorigin="anonymous"></script>
-<script type="text/javascript" src="app.js"></script>
 </html>
