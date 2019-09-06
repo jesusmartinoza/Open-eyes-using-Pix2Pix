@@ -1,9 +1,14 @@
-<h1 align="center">Open eyes using Deep Learning 👀</h1>
+<h1 align="center">Open eyes using Deep Learning 👀 [WIP]</h1>
 <p>
   <img src="https://img.shields.io/badge/version-0.1-blue.svg?cacheSeconds=2592000" />
 </p>
 Have you ever had the perfect picture but closed your eyes? 🤦 It's a very common problem, you can fix it by going to Photoshop and editing the picture there.... But why not let an AI to do the hard work for us?
 
+### Training workflow
+![](https://github.com/jesusmartinoza/Open-eyes-using-Pix2Pix/blob/master/assets/training_process.png?raw=true)
+
+### Developing web app
+WIP
 
 ### Author
 Developed by Jesús Alberto Martínez Mendoza for the challenge #RetoDotCSV2080Super.
