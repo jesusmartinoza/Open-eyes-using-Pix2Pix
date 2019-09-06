@@ -7,6 +7,8 @@ class Steps{
   }
 
   setCurrentStep(currentStep){
+    if(currentStep == 2)
+      sendForm();
     this.currentStep = currentStep;
   }
 
@@ -59,7 +61,7 @@ class Panels{
   }
 
   updatePanelsContainerHeight(){
-    this.panelsContainer.style.height = '370px';
+    this.panelsContainer.style.height = '390px';
   }
 
   updatePanelsPosition(currentStep){
@@ -68,9 +70,9 @@ class Panels{
 
     for (let i = 0; i < panels.length; i++) {
       panels[i].classList.remove(
-         'movingIn',
-         'movingOutBackward',
-         'movingOutFoward'
+        'movingIn',
+        'movingOutBackward',
+        'movingOutFoward'
       );
 
       if(i !== currentStep){
@@ -104,9 +106,9 @@ class Wizard{
 
   updateButtonsStatus(){
     if(this.currentStep === 0)
-      this.previousControl.classList.add('disabled');
+    this.previousControl.classList.add('disabled');
     else
-      this.previousControl.classList.remove('disabled');
+    this.previousControl.classList.remove('disabled');
   }
 
   updtadeCurrentStep(movement){
@@ -155,7 +157,7 @@ class Wizard{
       this.updtadeCurrentStep(movement);
       this.steps.handleStepsClasses(movement);
     }else{
-       throw('This was an invalid movement');
+      throw('This was an invalid movement');
     }
   }
 
@@ -174,18 +176,19 @@ let buttonPrevious = document.querySelector('.previous');
 
 wizard.addControls(buttonPrevious, buttonNext);
 
-function readURL(input) {
+function readPictureURL(input, id) {
   if (input.files && input.files[0]) {
 
     var reader = new FileReader();
 
+
     reader.onload = function(e) {
-      $('.image-upload-wrap').hide();
+      $(`#${id} .image-upload-wrap`).hide();
 
-      $('.file-upload-image').attr('src', e.target.result);
-      $('.file-upload-content').show();
+      $(`#${id} .file-upload-image`).attr('src', e.target.result);
+      $(`#${id} .file-upload-content`).show();
 
-      $('.image-title').html(input.files[0].name);
+      $(`#${id} .image-title`).html(input.files[0].name);
     };
 
     reader.readAsDataURL(input.files[0]);
@@ -195,14 +198,36 @@ function readURL(input) {
   }
 }
 
-function removeUpload() {
-  $('.file-upload-input').replaceWith($('.file-upload-input').clone());
-  $('.file-upload-content').hide();
-  $('.image-upload-wrap').show();
+function removeUpload(id) {
+  $(`#${id} .file-upload-inputt`).replaceWith('.file-upload-input').clone();
+  $(`#${id} .file-upload-content`).hide();
+  $(`#${id} .image-upload-wrap`).show();
 }
-$('.image-upload-wrap').bind('dragover', function () {
-		$('.image-upload-wrap').addClass('image-dropping');
+
+/**
+ * Append image to form and send it to server.
+ */
+function sendForm() {
+	console.log("Uploading file")
+	var formData = new FormData();
+	formData.append('input_image', $('#input-image .file-upload-input')[0].files[0]);
+	formData.append('target_image', $('#target-image .file-upload-input')[0].files[0]);
+
+	$.ajax({
+		url: '/upload',
+		data: formData,
+		processData: false,
+		contentType: false,
+		type: 'POST',
+		success: function( data ) {
+			console.log(data)
+		}
 	});
-	$('.image-upload-wrap').bind('dragleave', function () {
-		$('.image-upload-wrap').removeClass('image-dropping');
+}
+
+$('.image-upload-wrap').bind('dragover', function () {
+  $('.image-upload-wrap').addClass('image-dropping');
+});
+$('.image-upload-wrap').bind('dragleave', function () {
+  $('.image-upload-wrap').removeClass('image-dropping');
 });
