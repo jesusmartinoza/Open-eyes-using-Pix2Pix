@@ -16,7 +16,7 @@ class FacePatcher:
     detector = dlib.get_frontal_face_detector()
     predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 
-    def __init__(self, picture_input, target_face, test = False):
+    def __init__(self, picture_input, target_face, is_test = False):
         """
         Read images from paths and init patching.
 
@@ -25,7 +25,7 @@ class FacePatcher:
         """
         self.picture_input = cv2.imread(picture_input)
         self.target_face = cv2.imread(target_face)
-        self.test = test
+        self.is_test = is_test
 
         if not self.is_greyscale(picture_input) and not self.is_greyscale(target_face):
             self.target_face = color_transfer(self.picture_input, self.target_face)
@@ -133,7 +133,13 @@ class FacePatcher:
         """
         Store image in disk
         """
-        cv2.imwrite(name, self.picture_input)
+        #cv2.imwrite(name, self.picture_input)
+        h1, w1 = self.picture_input.shape[:2]
+        h2, w2 = img2.shape[:2]
+        vis = np.zeros((max(h1, h2), w1+w2), np.uint8)
+        vis[:h1, :w1] = img1
+        vis[:h2, w1:w1+w2] = img2
+        vis = cv2.cvtColor(vis, cv2.COLOR_GRAY2BGR)
         print("Image saved with name:" + name)
 
     def show_result(self):
@@ -217,7 +223,7 @@ class FacePatcher:
                           (r_eye_x - re_p, r_eye_y - right_eye.shape[0] + re_p),
                           right_eye[:, :, 3] / 255.0)
 
-        if self.test: # Draw eye landmarks
+        if self.is_test: # Draw eye landmarks
             for n in range(0, 68):
                 x = landmarks.part(n).x
                 y = landmarks.part(n).y

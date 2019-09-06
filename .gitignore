@@ -3,3 +3,4 @@ venv/
 __pycache__
 generated_data/
 generated_fixed/
+dataset/
