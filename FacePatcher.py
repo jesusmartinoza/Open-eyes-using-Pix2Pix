@@ -16,19 +16,33 @@ class FacePatcher:
     detector = dlib.get_frontal_face_detector()
     predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 
-    def __init__(self, picture_input, target_face, is_test = False):
+    def __init__(self, picture_input = None, target_face = None, is_test = False):
         """
         Read images from paths and init patching.
 
         First transfer picture style using
         https://github.com/jrosebr1/color_transfer
         """
-        self.picture_input = cv2.imread(picture_input)
-        self.target_face = cv2.imread(target_face)
         self.is_test = is_test
 
+        if picture_input is not None:
+            self.picture_input = cv2.imread(picture_input)
+            self.target_face = cv2.imread(target_face)
+
+            if not self.is_greyscale(picture_input) and not self.is_greyscale(target_face):
+                self.target_face = color_transfer(self.picture_input, self.target_face)
+            self.initPatching()
+
+    def load_from_files(self, picture_input, target_face):
+        npimg = np.fromfile(picture_input, np.uint8)
+        self.picture_input = cv2.imdecode(npimg, cv2.COLOR_BGR2RGB)
+
+        npimg = np.fromfile(target_face, np.uint8)
+        self.target_face = cv2.imdecode(npimg, cv2.COLOR_BGR2RGB)
+        
         if not self.is_greyscale(picture_input) and not self.is_greyscale(target_face):
             self.target_face = color_transfer(self.picture_input, self.target_face)
+
         self.initPatching()
 
     def is_greyscale(self, img_path):
