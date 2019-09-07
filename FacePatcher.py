@@ -39,9 +39,9 @@ class FacePatcher:
 
         npimg = np.fromfile(target_face, np.uint8)
         self.target_face = cv2.imdecode(npimg, cv2.COLOR_BGR2RGB)
-        
-        if not self.is_greyscale(picture_input) and not self.is_greyscale(target_face):
-            self.target_face = color_transfer(self.picture_input, self.target_face)
+
+        #if not self.is_greyscale(picture_input) and not self.is_greyscale(target_face):
+        #    self.target_face = color_transfer(self.picture_input, self.target_face)
 
         self.initPatching()
 
@@ -57,7 +57,7 @@ class FacePatcher:
                 if r != g != b: return False
         return True
 
-    def overlay_image_alpha(self, img_overlay, pos, alpha_mask):
+    def overlay_image_alpha(self, picture, img_overlay, pos, alpha_mask):
         """
         Overlay img_overlay on top of img at the position specified by
         pos and blend using alpha_mask.
@@ -65,7 +65,7 @@ class FacePatcher:
         Alpha mask must contain values within the range [0, 1] and be the
         same size as img_overlay.
         """
-        img = self.picture_input
+        img = picture
         x, y = pos
 
         # Image ranges
@@ -89,6 +89,8 @@ class FacePatcher:
             img[y1:y2, x1:x2, c] = (alpha * img_overlay[y1o:y2o, x1o:x2o, c] +
                                     alpha_inv * img[y1:y2, x1:x2, c])
 
+        self.result = img
+
     def calculate_eyes_angle(self, landmarks):
         """
         SOHCAHTOA
@@ -102,6 +104,15 @@ class FacePatcher:
         r_angle = degrees(atan2(r_delta_Y, r_delta_X))
 
         return (l_angle, r_angle)
+
+    def crop_face(self, image, face):
+        offset = int(image.shape[1] / 6)
+        x, y = face.left(), face.top()
+        x1, y1 = face.right(), face.bottom()
+
+        cropped = image[y - offset:y1 + offset, x - offset:x1 + offset].copy()
+
+        return cropped
 
     def extract_left_eye(self, face, landmarks):
         x = landmarks.part(36).x
@@ -210,7 +221,15 @@ class FacePatcher:
             if eye_height < prev_eye_height:
                 face_to_change = idx
 
-        landmarks = FacePatcher.predictor(picture_gray, faces[face_to_change])
+        # Crop closed eyes face from picture_input
+        extracted_face = self.crop_face(self.picture_input, faces[face_to_change])
+        face_gray = cv2.cvtColor(extracted_face, cv2.COLOR_BGR2GRAY)
+        faces = FacePatcher.detector(face_gray)
+        
+        if len(faces) == 0:
+            raise ValueError('Not detected face in input image')
+
+        landmarks = FacePatcher.predictor(face_gray, faces[0])
         l_eye_x = landmarks.part(36).x
         l_eye_w = landmarks.part(39).x - l_eye_x
         l_eye_y = landmarks.part(41).y
@@ -229,23 +248,27 @@ class FacePatcher:
         right_eye = imutils.rotate_bound(right_eye, r_angle)
 
         # Overlay eyes
-        self.overlay_image_alpha(left_eye[:, :, 0:3],
-                           (l_eye_x - le_p, l_eye_y - left_eye.shape[0] + le_p),
-                           left_eye[:, :, 3] / 255.0)
+        self.overlay_image_alpha(extracted_face,
+                                left_eye[:, :, 0:3],
+                                (l_eye_x - le_p, l_eye_y - left_eye.shape[0] + le_p),
+                                left_eye[:, :, 3] / 255.0)
 
-        self.overlay_image_alpha(right_eye[:, :, 0:3],
-                          (r_eye_x - re_p, r_eye_y - right_eye.shape[0] + re_p),
-                          right_eye[:, :, 3] / 255.0)
+        self.overlay_image_alpha(extracted_face,
+                                right_eye[:, :, 0:3],
+                                (r_eye_x - re_p, r_eye_y - right_eye.shape[0] + re_p),
+                                right_eye[:, :, 3] / 255.0)
 
         if self.is_test: # Draw eye landmarks
             for n in range(0, 68):
                 x = landmarks.part(n).x
                 y = landmarks.part(n).y
 
+                cv2.circle(self.result, (x, y), 4, (255, 0, 255), -1)
+
                 # Left eye
                 if n in range(36, 42):
-                    cv2.circle(self.picture_input, (x, y), 4, (255, 0, 0), -1)
+                    cv2.circle(self.result, (x, y), 4, (255, 0, 0), -1)
 
                 # Right eye
                 if n in range(42, 48):
-                   cv2.circle(self.picture_input, (x, y), 4, (255, 0, 0), -1)
+                   cv2.circle(self.result, (x, y), 4, (255, 0, 0), -1)

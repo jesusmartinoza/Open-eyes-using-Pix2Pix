@@ -40,9 +40,14 @@ def upload_image():
                 return jsonify(response)
 
             # Patch image
-            fp = FacePatcher()
+            try:
+                fp = FacePatcher(is_test = False)
+            except ValueError as err:
+                response['message'] = err
+                return jsonify(response)
+
             fp.load_from_files(request.files['input_image'], request.files['target_image'])
-            patching_result = fp.picture_input
+            patching_result = fp.result
 
             # Prepare image for model
             patching_result = tf.cast(patching_result, tf.float32)
@@ -51,7 +56,7 @@ def upload_image():
             batched = tf.expand_dims(normalized, 0)
 
             # Apply model! :D
-            predicted = model.predict(batched, steps=50)
+            predicted = model.predict(batched, steps=1)
             predicted = predicted[0,:,:,:]
 
             unnormalized = (predicted + 1) / 2
