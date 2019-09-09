@@ -42,7 +42,6 @@ class FacePatcher:
 
         #if not self.is_greyscale(picture_input) and not self.is_greyscale(target_face):
         #    self.target_face = color_transfer(self.picture_input, self.target_face)
-
         self.initPatching()
 
     def is_greyscale(self, img_path):
@@ -130,7 +129,7 @@ class FacePatcher:
         eye = face[y:y+h, x:x+w].copy()
 
         if len(eye) == 0:
-            raise AttributeError('No left eye detected')
+            raise ValueError('No left eye detected')
 
         return cv2.cvtColor(eye, cv2.COLOR_RGB2RGBA).copy(), w, h, padding
 
@@ -150,7 +149,7 @@ class FacePatcher:
         eye = face[y:y+h, x:x+w].copy()
 
         if len(eye) == 0:
-            raise AttributeError('No right eye detected')
+            raise ValueError('No right eye detected')
 
         return cv2.cvtColor(eye, cv2.COLOR_RGB2RGBA).copy(), w, h, padding
 
@@ -225,7 +224,7 @@ class FacePatcher:
         extracted_face = self.crop_face(self.picture_input, faces[face_to_change])
         face_gray = cv2.cvtColor(extracted_face, cv2.COLOR_BGR2GRAY)
         faces = FacePatcher.detector(face_gray)
-        
+
         if len(faces) == 0:
             raise ValueError('Not detected face in input image')
 

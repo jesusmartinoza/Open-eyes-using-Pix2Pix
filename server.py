@@ -42,9 +42,10 @@ def upload_image():
             # Patch image
             try:
                 fp = FacePatcher(is_test = False)
-            except ValueError as err:
-                response['message'] = err
+            except Exception as e:
+                response['message'] = e
                 return jsonify(response)
+
 
             fp.load_from_files(request.files['input_image'], request.files['target_image'])
             patching_result = fp.result
@@ -67,6 +68,14 @@ def upload_image():
 
             response['processed_image'] = result_name
             return jsonify(response)
+
+# flask will check if raised exception is of type 'SomeException' (or lower)
+# if so, will just execute this method
+@app.errorhandler(ValueError)
+def handle_error(error):
+    print("Entra aquí")
+    response = jsonify({'message': str(error)})
+    return response
 
 if __name__ == "__main__":
     app.run(debug=True)
