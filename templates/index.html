@@ -109,7 +109,7 @@
           <div class="panel">
             <header class="panel__header">
               <h2 class="panel__title"><b>Great!</b> Now pick the eyes you want 👀</h2>
-              <p class="panel__subheading">No pictures of yourself? Don't worry you can use one these samples</p>
+              <!-- <p class="panel__subheading">No pictures of yourself? Don't worry you can use one these samples</p> -->
             </header>
 
             <div id="target-image" class="file-upload">
@@ -130,10 +130,20 @@
 
           <div class="panel">
             <header class="panel__header">
-              <h2 class="panel__title">Finish! 🎉🎉🎉</h2>
-              <p class="panel__subheading">Share con la banda.</p>
+              <h2 id="status-title" class="panel__title">Processing...</h2>
 
-              <img id="processed-image">
+              <div id="loader">
+                <div class="loader">Loading...</div>
+              </div>
+              <div id="status">
+                <i class="far fa-sad-tear"></i>
+                <h6></h6>
+              </div>
+              <div id="processed-result" class="row align-items-end">
+                <div class="col-sm"><img class="input-image" src="" alt=""><b>+</b></div>
+                <div class="col-sm"><img class="target-image" src="" alt=""><b>=</b></div>
+                <div class="col-sm"><img id="processed-image"></div>
+              </div>
             </header>
 
           </div>

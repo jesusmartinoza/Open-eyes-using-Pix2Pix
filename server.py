@@ -31,10 +31,10 @@ def upload_image():
             # Check if the request has images
             if 'input_image' not in request.files:
                 response['success'] = False
-                response['message'] = 'No input file provided'
+                response['message'] = 'No image provided in step 1'
             if 'target_image' not in request.files:
                 response['success'] = False
-                response['message'] = 'No target file provided'
+                response['message'] = 'No image provided in step 2'
 
             if not response['success']:
                 return jsonify(response)

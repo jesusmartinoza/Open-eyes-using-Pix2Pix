@@ -189,6 +189,7 @@ function readPictureURL(input, id) {
       $(`#${id} .file-upload-content`).show();
 
       $(`#${id} .image-title`).html(input.files[0].name);
+      $(`#processed-result .${id}`).attr('src', e.target.result);
     };
 
     reader.readAsDataURL(input.files[0]);
@@ -213,6 +214,11 @@ function sendForm() {
 	formData.append('input_image', $('#input-image .file-upload-input')[0].files[0]);
 	formData.append('target_image', $('#target-image .file-upload-input')[0].files[0]);
 
+  $('#processed-result').hide();
+  $('#status').hide();
+  $('#loader').show();
+  $('#status-title').text("Processing...");
+
 	$.ajax({
 		url: '/upload',
 		data: formData,
@@ -221,8 +227,17 @@ function sendForm() {
 		type: 'POST',
 		success: function( data ) {
 			console.log(data)
+      $('#loader').hide()
+
       if(data.success) {
+        $('#status-title').text("Result...");
+        $('#processed-result').show();
+        $('#status').hide()
         $('#processed-image').attr('src', data.processed_image);
+      } else {
+        $('#status').show();
+        $('#status-title').text('Couldn\'t complete')
+        $('#status h6').text(data.message);
       }
 		}
 	});
