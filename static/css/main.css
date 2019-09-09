@@ -3,12 +3,16 @@
 }
 #status {
   display: none;
-  margin-top: 6em;
+  margin-top: 55px;
   text-align: center;
 }
 #status i {
   font-size: 84px;
   padding-bottom: 16px;
+}
+#processed-result .col-sm {
+  align-items: center;
+  display: flex;
 }
 #processed-result img {
   width: 80%;
@@ -19,8 +23,15 @@
   font-weight: 900;
   position: absolute;
   right: 16px;
+  top: 45%;
 }
 
+@media only screen and (max-width: 480px) {
+  .file-upload-image {
+    max-height: 140px !important;
+    max-width: 140px !important;
+  }
+}
 /***************************************************************************************
                               L O A D E R
                https://projects.lukehaas.me/css-loaders/
@@ -234,12 +245,14 @@ body, html {
   overflow: hidden;
 }
 .panel {
+  min-height: 240px;
   position: absolute;
   right: 0;
   top: 0;
   left: 0;
   transition: 0.5s all;
   padding: 50px;
+  padding-top: 75px;
 }
 /* .panel__header {
   margin-bottom: 30px;
@@ -248,6 +261,8 @@ body, html {
   font-size: 1.5rem;
   line-height: 2rem;
   margin: 0;
+  text-align: center;
+  margin-bottom: 16px;
 }
 .panel__subheading {
   font-size: 0.9rem;
@@ -418,7 +433,6 @@ body {
   background-color: #ffffff;
   width: 100%;
   margin: 0 auto;
-  padding: 20px 0;
 }
 
 .file-upload-btn {
@@ -465,7 +479,7 @@ body {
 }
 
 .image-upload-wrap {
-  margin-top: 20px;
+  margin-top: 40px;
   border: 4px dashed #12C8B5;
   position: relative;
   transition: 250ms;
@@ -498,7 +512,7 @@ body {
   max-height: 200px;
   max-width: 200px;
   margin: auto;
-  padding: 20px;
+  padding: 10px;
 }
 
 .remove-image {

@@ -49,7 +49,8 @@ class Panels{
   }
 
   getCurrentPanelHeight(){
-    return `${this.getPanels()[this.currentStep].offsetHeight}px`;
+    var a = this.getPanels()[this.currentStep];
+    return `${a.clientHeight}px`;
   }
 
   getPanelsContainer(){
@@ -61,7 +62,9 @@ class Panels{
   }
 
   updatePanelsContainerHeight(){
-    this.panelsContainer.style.height = '390px';
+    this.panelsContainer.style.height = this.currentStep == 2 ?
+                          this.getCurrentPanelHeight():
+                          '365px';
   }
 
   updatePanelsPosition(currentStep){
@@ -167,6 +170,10 @@ class Wizard{
 
     return fowardMov || backMov;
   }
+
+  updatePanelsPosition(){
+    this.panels.updatePanelsPosition(this.currentStep);
+  }
 }
 
 let wizardElement = document.getElementById('wizard');
@@ -230,10 +237,11 @@ function sendForm() {
       $('#loader').hide()
 
       if(data.success) {
-        $('#status-title').text("Result...");
+        $('#status-title').text("Done! 🎉 🎉");
         $('#processed-result').show();
         $('#status').hide()
         $('#processed-image').attr('src', data.processed_image);
+        wizard.updatePanelsPosition()
       } else {
         $('#status').show();
         $('#status-title').text('Couldn\'t complete')
