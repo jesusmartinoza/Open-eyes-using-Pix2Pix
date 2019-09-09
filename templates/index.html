@@ -6,166 +6,186 @@
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static',    filename='css/main.css') }}">
-  <title>Open eyes App</title>
+  <title>App para abrir ojos en fotos usando IA</title>
 </head>
 
-<body>
-  <div class="wrapper">
-    <div id="wizard" class="wizard">
-      <div class="wizard__content">
-        <header class="wizard__header">
-          <div class="wizard__header-overlay"></div>
-
-          <div class="wizard__header-content">
-            <h1 class="wizard__title" >Open eyes using Deep Learning</h1>
-            <p class="wizard__subheading">Start with <span>3</span> simple steps.</p>
-          </div>
-
-          <div class="wizard__steps">
-            <nav class="steps">
-              <div class="step -active">
-                <div class="step__content">
-                  <p class="step__number"><i class="fas fa-grin-beam"></i></p>
-                  <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-                  </svg>
-
-                  <div class="lines">
-                    <div class="line -start">
-                    </div>
-
-                    <div class="line -background">
-                    </div>
-
-                    <div class="line -progress">
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="step">
-                <div class="step__content">
-                  <p class="step__number"><i class="fa fa fa-eye"></i></p>
-                  <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-                  </svg>
-
-                  <div class="lines">
-                    <div class="line -background">
-                    </div>
-
-                    <div class="line -progress">
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="step">
-                <div class="step__content">
-                  <p class="step__number"><i class="fa fa-group"></i></p>
-                  <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-                  </svg>
-
-                  <div class="lines">
-                    <div class="line -background">
-                    </div>
-
-                    <div class="line -progress">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </nav>
-          </div>
-        </header>
-
-
-        <form id="wizard" action="/upload" method="POST" class="panels">
-          <div class="panel">
-            <header class="panel__header">
-              <h2 class="panel__title">Pick your closed eyes picture 😽</h2>
-            </header>
-
-            <div id="input-image" class="file-upload">
-              <div class="image-upload-wrap">
-                <input class="file-upload-input" type='file' onchange="readPictureURL(this, 'input-image');" accept="image/*" />
-                <div class="drag-text">
-                  <p>Drag and drop a file or click to add image</p>
-                </div>
-              </div>
-              <div class="file-upload-content">
-                <img class="file-upload-image" src="#" alt="Your closed eyes picture" />
-                <div class="image-title-wrap">
-                  <button type="button" onclick="removeUpload('input-image')" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel">
-            <header class="panel__header">
-              <h2 class="panel__title"><b>Great!</b> Now pick the eyes you want 👀</h2>
-              <!-- <p class="panel__subheading">No pictures of yourself? Don't worry you can use one these samples</p> -->
-            </header>
-
-            <div id="target-image" class="file-upload">
-              <div class="image-upload-wrap">
-                <input class="file-upload-input" type='file' onchange="readPictureURL(this, 'target-image');" accept="image/*" />
-                <div class="drag-text">
-                  <p>Drag and drop a file or click to add image</p>
-                </div>
-              </div>
-              <div class="file-upload-content">
-                <img class="file-upload-image" src="#" alt="your image" />
-                <div class="image-title-wrap">
-                  <button type="button" onclick="removeUpload('target-image')" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel">
-            <header class="panel__header">
-              <h2 id="status-title" class="panel__title">Processing...</h2>
-
-              <div id="loader">
-                <div class="loader">Loading...</div>
-              </div>
-              <div id="status">
-                <i class="far fa-sad-tear"></i>
-                <h6></h6>
-              </div>
-              <div id="processed-result" class="row align-middle">
-                <div class="col-sm"><img class="input-image" src="" alt=""><b>+</b></div>
-                <div class="col-sm"><img class="target-image" src="" alt=""><b>=</b></div>
-                <div class="col-sm"><img id="processed-image"></div>
-              </div>
-            </header>
-
-          </div>
-        </form>
-
-        <div class="wizard__footer">
-          <button class="button previous">Previous</button>
-          <button class="button next">Next</button>
-        </div>
-      </div>
-
-      <p class="wizard__congrats-message">
+<body class="container">
+  <div class="row mt-5">
+      <h1 class="col-md-12 text-center">Abrir ojos usando Pix2Pix</h1>
+  </div>
+  <div class="row mt-5 mb-5 align-middle">
+    <div class="col-md-4 text-justify">
+      <h5>¿Alguna vez te han tomado la foto perfecta pero cerraste los ojos? 🤦</h5>
+      <p>Pix2Pix y la Inteligencia Artificial llegan al rescate, solo tienes que subir la foto a editar y una foto con los ojos abiertos. El algoritmo se encargará de hacer el remix de las fotos.</p>
+      <p>
+         Por favor considera que está es una prueba de concepto y aún se encuentra en desarrollo por lo que los resultados pueden variar mucho.
       </p>
+      <!-- <p>El canal de Youtube DotCSV lanzó un reto donde hay que construir un proyecto que integre el modelo Pix2Pix. </p> -->
+      <!-- <p>Project for <a href="https://www.youtube.com/watch?v=BNgAaCK920E" target="_blank" rel="nofollow">#RetoDotCSV2080Super</a> -->
+
+      <h6 class="pt-3"><i>🎶Clone it, fork it, push it... Technology... 🎶</i></h6>
+      <p>Si te interesa saber como funciona el proyecto puedes visitar el repositorio, aquí está todo el código de la aplicación. </p>
+      <div class="github-card" data-github="jesusmartinoza/Open-eyes-using-Pix2Pix" data-width="350" data-height="" data-theme="default"></div>
+      <script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+      <p class="mb-3 mt-2">PR son bienvenidos.</p>
+    </div>
+
+    <div class="wrapper col-md-7">
+      <div id="wizard" class="wizard">
+        <div class="wizard__content">
+          <header class="wizard__header">
+            <div class="wizard__header-overlay"></div>
+
+            <div class="wizard__header-content">
+              <p class="wizard__subheading">Son solo <span>3</span> simples pasos.</p>
+            </div>
+
+            <div class="wizard__steps">
+              <nav class="steps">
+                <div class="step -active">
+                  <div class="step__content">
+                    <p class="step__number"><i class="fas fa-grin-beam"></i></p>
+                    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                      <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                      <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+
+                    <div class="lines">
+                      <div class="line -start">
+                      </div>
+
+                      <div class="line -background">
+                      </div>
+
+                      <div class="line -progress">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step">
+                  <div class="step__content">
+                    <p class="step__number"><i class="fa fa fa-eye"></i></p>
+                    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                      <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                      <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+
+                    <div class="lines">
+                      <div class="line -background">
+                      </div>
+
+                      <div class="line -progress">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step">
+                  <div class="step__content">
+                    <p class="step__number"><i class="fa fa-group"></i></p>
+                    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                      <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                      <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+
+                    <div class="lines">
+                      <div class="line -background">
+                      </div>
+
+                      <div class="line -progress">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+            </div>
+          </header>
+
+
+          <form id="wizard" action="/upload" method="POST" class="panels">
+            <div class="panel">
+              <header class="panel__header">
+                <h2 class="panel__title">Sube tu foto con los ojos cerrados 😽</h2>
+              </header>
+
+              <div id="input-image" class="file-upload">
+                <div class="image-upload-wrap">
+                  <input class="file-upload-input" type='file' onchange="readPictureURL(this, 'input-image');" accept="image/*" />
+                  <div class="drag-text">
+                    <p>Arrastra y suelta para agregar una imagen</p>
+                  </div>
+                </div>
+                <div class="file-upload-content">
+                  <img class="file-upload-image" src="#" alt="Your closed eyes picture" />
+                  <div class="image-title-wrap">
+                    <button type="button" onclick="removeUpload('input-image')" class="remove-image">Remover <span class="image-title">Imagen seleccionada</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <header class="panel__header">
+                <h2 class="panel__title"><b>¡Genial!</b> Ahora sube una foto con los ojos abiertos 👀</h2>
+                <!-- <p class="panel__subheading">Puede ser una foto tuya o de otra persona</p> -->
+              </header>
+
+              <div id="target-image" class="file-upload">
+                <div class="image-upload-wrap">
+                  <input class="file-upload-input" type='file' onchange="readPictureURL(this, 'target-image');" accept="image/*" />
+                  <div class="drag-text">
+                    <p>Arrastra y suelta para agregar una imagen</p>
+                  </div>
+                </div>
+                <div class="file-upload-content">
+                  <img class="file-upload-image" src="#" alt="your image" />
+                  <div class="image-title-wrap">
+                    <button type="button" onclick="removeUpload('target-image')" class="remove-image">Remover <span class="image-title">Imagen seleccionada</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <header class="panel__header">
+                <h2 id="status-title" class="panel__title">Procesando...</h2>
+
+                <div id="loader">
+                  <div class="loader">Cargando...</div>
+                </div>
+                <div id="status">
+                  <i class="far fa-sad-tear"></i>
+                  <h6></h6>
+                </div>
+                <div id="processed-result" class="row align-middle">
+                  <div class="col-sm"><img class="input-image" src="" alt=""><b>+</b></div>
+                  <div class="col-sm"><img class="target-image" src="" alt=""><b>=</b></div>
+                  <div class="col-sm"><img id="processed-image"></div>
+                </div>
+              </header>
+
+            </div>
+          </form>
+
+          <div class="wizard__footer">
+            <button class="button previous">Anterior</button>
+            <button class="button next">Siguiente</button>
+          </div>
+        </div>
+
+        <p class="wizard__congrats-message">
+        </p>
+      </div>
     </div>
   </div>
 
   <script src="https://kit.fontawesome.com/951b0c7d25.js"></script>
-
   <script
     src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
     crossorigin="anonymous"></script>
   <script type="text/javascript" src="{{ url_for('static',    filename='app.js') }}"></script>
+
 </body>
 </html>

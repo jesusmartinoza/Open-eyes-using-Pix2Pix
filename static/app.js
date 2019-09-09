@@ -125,13 +125,13 @@ class Wizard{
 
   handleNextStepButton(){
     if(this.currentStep === this.stepsQuantity - 1){
-      this.nextControl.innerHTML = 'Conclude!';
+      this.nextControl.innerHTML = 'Descargar';
 
       this.nextControl.removeEventListener('click', this.nextControlMoveStepMethod);
       this.nextControl.addEventListener('click', this.concludeControlMoveStepMethod);
       this.nextControl.addEventListener('click', this.wizardConclusionMethod);
     }else{
-      this.nextControl.innerHTML = 'Next';
+      this.nextControl.innerHTML = 'Siguiente';
 
       this.nextControl.addEventListener('click', this.nextControlMoveStepMethod);
       this.nextControl.removeEventListener('click', this.concludeControlMoveStepMethod);
@@ -237,14 +237,14 @@ function sendForm() {
       $('#loader').hide()
 
       if(data.success) {
-        $('#status-title').text("Done! 🎉 🎉");
+        $('#status-title').text("¡Listo! 🎉 🎉");
         $('#processed-result').show();
         $('#status').hide()
         $('#processed-image').attr('src', data.processed_image);
         wizard.updatePanelsPosition()
       } else {
         $('#status').show();
-        $('#status-title').text('Couldn\'t complete')
+        $('#status-title').text('No pudo ser completado')
         $('#status h6').text(data.message);
       }
 		}
