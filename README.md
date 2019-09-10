@@ -11,8 +11,6 @@ The idea of this project had been in my head for a long time, I couldn't find th
 You can find a demo in the following link:
 `https://stillworkingonit.foo`
 
-### Results
-
 ### Dataset
 This was the first big challenge. As you may know there is no dataset for people with open and closed eyes.  The dataset "Closed Eyes In The Wild(CEW)" is very useful but does not have a data labeled by person with open/closed eyes.
 
@@ -25,7 +23,11 @@ I did this process several times until I achieved a final dataset of 48 samples.
 ### Training process
 Everybody loves GAN gifs
 
-### Future work
+### Results
+
+### Future work and improvements
+ - In order to achieve better accuracy it is necessary to increase the dataset samples and this way try with more interesting approaches to solve the task.
+ - Currently the output of the app is a 256x256 picture. The output is only for the face, so a nice thing to do would be to overlay the result on the original photo.
 
 ### Author
 Developed by Jesús Alberto Martínez Mendoza.
