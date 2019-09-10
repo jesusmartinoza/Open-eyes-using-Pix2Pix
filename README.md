@@ -11,14 +11,14 @@ The idea of this project had been in my head for a long time, I couldn't find th
 You can find a demo in the following link:
 `https://stillworkingonit.foo`
 
-### Examples
+### Results
 
 ### Dataset
 This was the first big challenge. As you may know there is no dataset for people with open and closed eyes.  The dataset "Closed Eyes In The Wild(CEW)" is very useful but does not have a data labeled by person with open/closed eyes.
 
 So what I propose is to generate the dataset manually with the help of OpenCV. I take a picture from CEW dataset and overlay on it the eyes of a random photo of the UTKFace dataset. Then I manually cleaned the patches using Photoshop.
 
-I did this process several times until achieve a final dataset of 48 samples.
+I did this process several times until I achieved a final dataset of 48 samples.
 
 ![](https://github.com/jesusmartinoza/Open-eyes-using-Pix2Pix/blob/master/assets/training_process.png?raw=true)
 
