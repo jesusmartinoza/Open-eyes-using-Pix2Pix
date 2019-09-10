@@ -4,19 +4,19 @@
 </p>
 Have you ever had the perfect picture but closed your eyes? 🤦 It is a very common issue, you can fix it by going to Photoshop and editing the picture there.... But why not let an AI to do the hard work for us?
 
-### Motivation
-The idea of this project had been in my head for a long time, I couldn't find the time to carry it out. Then the Youtuber [DotCSV](https://www.youtube.com/channel/UCy5znSnfMsDwaLlROnZ7Qbg) launched [this](https://www.youtube.com/watch?v=BNgAaCK920E&t=12s) challenge where you have to build a project using Pix2Pix model. So perfect timing to start to code :)
-
 ### Usage
 You can find a demo in the following link:
 `https://stillworkingonit.foo`
 
+### Motivation
+The idea of this project had been in my head for a long time, I couldn't find the time to carry it out. Then the Youtuber [DotCSV](https://www.youtube.com/channel/UCy5znSnfMsDwaLlROnZ7Qbg) launched [this](https://www.youtube.com/watch?v=BNgAaCK920E&t=12s) challenge where you have to build a project using Pix2Pix model. So perfect timing to start to code.
+
 ### Dataset
-This was the first big challenge. As you may know there is no dataset for people with open and closed eyes.  The dataset "Closed Eyes In The Wild(CEW)" is very useful but does not have a data labeled by person with open/closed eyes.
+This was the first big challenge. As you may know there is no dataset for people with open and closed eyes.  The dataset *Closed Eyes In The Wild(CEW)* is very useful but does not have a data labeled by person with open/closed eyes.
 
-So what I propose is to generate the dataset manually with the help of OpenCV. I take a picture from CEW dataset and overlay on it the eyes of a random photo of the UTKFace dataset. Then I manually cleaned the patches using Photoshop.
+So what I propose is to generate the dataset **manually** with the help of OpenCV. Basically I take a picture from CEW dataset and overlay on it the eyes of a random photo of the UTKFace dataset. Then I manually clean the patches using Photoshop.
 
-I did this process several times until I achieved a final dataset of 48 samples.
+I did this process several times until I achieved a final dataset of **48 samples**.
 
 ![](https://github.com/jesusmartinoza/Open-eyes-using-Pix2Pix/blob/master/assets/training_process.png?raw=true)
 
@@ -26,8 +26,8 @@ Everybody loves GAN gifs
 ### Results
 
 ### Future work and improvements
- - In order to achieve better accuracy it is necessary to increase the dataset samples and this way try with more interesting approaches to solve the task.
- - Currently the output of the app is a 256x256 picture. The output is only for the face, so a nice thing to do would be to overlay the result on the original photo.
+ - In order to achieve **better accuracy** it is necessary to increase the dataset samples and this way try with more interesting approaches to solve the task.
+ - Currently the output of the app is a 256x256 picture. The output is only for the face, so a nice thing to do would be to **overlay** the result on the original photo.
 
 ### Author
 Developed by Jesús Alberto Martínez Mendoza.

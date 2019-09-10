@@ -6,12 +6,14 @@
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static',    filename='css/main.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static',    filename='favicon.ico') }}" type="image/x-icon">
+  <link rel="icon" href="{{ url_for('static',    filename='favicon.ico') }}" type="image/x-icon">
   <title>App para abrir ojos en fotos usando IA</title>
 </head>
 
 <body class="container">
   <div class="row mt-5">
-      <h1 class="col-md-12 text-center">Abrir ojos usando Pix2Pix</h1>
+      <h1 class="col-md text-center">Abrir ojos usando Pix2Pix</h1>
   </div>
   <div class="row mt-5 mb-5 align-middle">
     <div class="col-md-4 text-justify">
@@ -37,7 +39,7 @@
             <div class="wizard__header-overlay"></div>
 
             <div class="wizard__header-content">
-              <p class="wizard__subheading">Son solo <span>3</span> simples pasos.</p>
+              <h4 class="wizard__subheading">Obtén tu imagen en <span>3</span> simples pasos.</h4>
             </div>
 
             <div class="wizard__steps">
@@ -83,7 +85,7 @@
 
                 <div class="step">
                   <div class="step__content">
-                    <p class="step__number"><i class="fa fa-group"></i></p>
+                    <p class="step__number"><i class="fas fa-download"></i></p>
                     <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
                       <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
                       <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
@@ -106,7 +108,7 @@
           <form id="wizard" action="/upload" method="POST" class="panels">
             <div class="panel">
               <header class="panel__header">
-                <h2 class="panel__title">Sube tu foto con los ojos cerrados 😽</h2>
+                <h2 class="panel__title">Sube tu foto con los ojos cerrados</h2>
               </header>
 
               <div id="input-image" class="file-upload">

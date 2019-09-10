@@ -1,10 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
+
 .sample-image {
   height: 80px;
+}
+.button a {
+  color: white;
+  font-weight: 900;
+  text-decoration: none;
 }
 #status {
   display: none;
   margin-top: 55px;
   text-align: center;
+}
+#status i, #status h6 {
+  color: #777;
 }
 #status i {
   font-size: 84px;
@@ -26,6 +36,19 @@
   position: absolute;
   right: 16px;
   top: 45%;
+}
+
+h1 {
+  border-bottom: 1px solid #0A3D62;
+}
+
+h1, h5, h6 {
+  color: #0A3D62;
+  font-family: 'Rubik', sans-serif;
+}
+
+p {
+  color: #444;
 }
 
 @media only screen and (max-width: 480px) {
@@ -141,8 +164,8 @@ body {
   border-bottom-right-radius: 0;
   text-align: center;
   height: 100px;
-  background: url('http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1444253482/DG2015-paris.jpg?itok=XH81cBH9');
-  background-color: #4d637b;
+  background: url('../encoder.png');
+  background-color: #0B2461;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -162,7 +185,7 @@ body {
   height: 100%;
   top: 0;
   left: 0;
-  background: rgba(77, 99, 123, 0.6);
+  background: #12151dcc;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
@@ -174,7 +197,7 @@ body {
 .wizard__subheading {
   text-transform: uppercase;
   margin: 0;
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 100;
   letter-spacing: 2px;
 }
@@ -545,3 +568,45 @@ body {
   border: 0;
   transition: all .2s ease;
 }
+
+
+/***
+html {
+	margin: 0;
+	width: 100%;
+	height: 100vh;
+	font-family: "Exo", sans-serif;
+	color: #fff;
+	background: linear-gradient(-45deg, #ECF4F3, #D9EEEC, #F7F8FA, #ECF4F3);
+	background-size: 400% 400%;
+	animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+h3 {
+	color: #eee;
+	font-weight: 100;
+}
+
+h5 {
+	color:#eee;
+	font-weight:300;
+}
+
+a,
+a:hover {
+	text-decoration: none;
+	color: #ddd;
+}
+**/

@@ -123,14 +123,18 @@ class Wizard{
     this.updateButtonsStatus();
   }
 
-  handleNextStepButton(){
-    if(this.currentStep === this.stepsQuantity - 1){
-      this.nextControl.innerHTML = 'Descargar';
+  handleNextStepButton(image){
+    if(this.currentStep === this.stepsQuantity - 1) {
+      if(image != undefined) {
+        this.nextControl.innerHTML = `<a href="${image}" download>Descarga</a>`;
+      } else {
+        this.nextControl.innerHTML = `Descarga`;
+      }
 
       this.nextControl.removeEventListener('click', this.nextControlMoveStepMethod);
       this.nextControl.addEventListener('click', this.concludeControlMoveStepMethod);
       this.nextControl.addEventListener('click', this.wizardConclusionMethod);
-    }else{
+    } else {
       this.nextControl.innerHTML = 'Siguiente';
 
       this.nextControl.addEventListener('click', this.nextControlMoveStepMethod);
@@ -139,8 +143,8 @@ class Wizard{
     }
   }
 
-  handleWizardConclusion(){
-    this.wizard.classList.add('completed');
+  handleWizardConclusion() {
+    //this.wizard.classList.add('completed');
   };
 
   addControls(previousControl, nextControl){
@@ -241,7 +245,8 @@ function sendForm() {
         $('#processed-result').show();
         $('#status').hide()
         $('#processed-image').attr('src', data.processed_image);
-        wizard.updatePanelsPosition()
+        wizard.updatePanelsPosition();
+        wizard.handleNextStepButton(data.processed_image);
       } else {
         $('#status').show();
         $('#status-title').text('No pudo ser completado')
