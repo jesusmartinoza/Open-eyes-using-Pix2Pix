@@ -5,8 +5,7 @@
 Have you ever had the perfect picture but closed your eyes? 🤦 It is a very common issue, you can fix it by going to Photoshop and editing the picture there.... But why not let an AI to do the hard work for us?
 
 ### Usage
-You can find a demo in the following link:
-`https://stillworkingonit.foo`
+You can find a demo in the following [link](https://overflow.ai/open-eyes-using-pix2pix)
 
 ### Motivation
 The idea of this project had been in my head for a long time, I couldn't find the time to carry it out. Then the Youtuber [DotCSV](https://www.youtube.com/channel/UCy5znSnfMsDwaLlROnZ7Qbg) launched [this](https://www.youtube.com/watch?v=BNgAaCK920E&t=12s) challenge where you have to build a project using Pix2Pix model. So perfect timing to start to code.
