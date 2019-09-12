@@ -22,7 +22,10 @@ I did this process several times until I achieved a final dataset of **48 sample
 ![](https://github.com/jesusmartinoza/Open-eyes-using-Pix2Pix/blob/master/assets/training_process.png?raw=true)
 
 ### Training process
-Everybody loves GAN gifs
+GIF: From FacePatcher image to (hopefully) Photoshop level
+
+![](https://github.com/jesusmartinoza/Open-eyes-using-Pix2Pix/blob/master/assets/process.gif?raw=true)
+
 
 ### Results
 
