@@ -5,7 +5,7 @@
 Have you ever had the perfect picture but closed your eyes? 🤦 It is a very common issue, you can fix it by going to Photoshop and editing the picture there.... But why not let an AI to do the hard work for us?
 
 ### Demo
-You can find a demo in the following [link](https://overflow.ai/open-eyes-using-pix2pix)
+You can find a demo in the following link: [https://overflow.ai/open-eyes-using-pix2pix](https://overflow.ai/open-eyes-using-pix2pix)
 
 ![](https://github.com/jesusmartinoza/Open-eyes-using-Pix2Pix/blob/master/assets/demo_1.png?raw=true)
 
