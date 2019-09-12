@@ -10,7 +10,7 @@ You can find a demo in the following [link](https://overflow.ai/open-eyes-using-
 ![](https://github.com/jesusmartinoza/Open-eyes-using-Pix2Pix/blob/master/assets/demo_1.png?raw=true)
 
 ### Motivation
-The idea of this project had been in my head for a long time, I couldn't find the time to carry it out. Then the Youtuber [DotCSV](https://www.youtube.com/channel/UCy5znSnfMsDwaLlROnZ7Qbg) launched [this](https://www.youtube.com/watch?v=BNgAaCK920E&t=12s) challenge where you have to build a project using Pix2Pix model. So perfect timing to start to code.
+The idea of this project had been in my head for a long time, I couldn't find the time to carry it out. Then the Youtuber [DotCSV](https://www.youtube.com/channel/UCy5znSnfMsDwaLlROnZ7Qbg) launched the challenge [#RetoDotCSV2080Super](https://www.youtube.com/watch?v=BNgAaCK920E) where you have to build a project using Pix2Pix model. So perfect timing to start to code.
 
 ### Dataset
 This was the first big challenge. As you may know there is no dataset for people with open and closed eyes.  The dataset *Closed Eyes In The Wild(CEW)* is very useful but does not have a data labeled by person with open/closed eyes.
