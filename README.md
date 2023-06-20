@@ -5,9 +5,9 @@
 Have you ever had the perfect picture but closed your eyes? 🤦 It is a very common issue, you can fix it by going to Photoshop and editing the picture there.... But why not let an AI to do the hard work for us?
 
 ### Demo
-iOS app with way more polished algorithm: [<img src="assets/appstore-badge.png" height="50">](https://apps.apple.com/us/app/id6449416200)
-
-Original demo: [Overflow.ai](https://overflow.ai/open-eyes-using-pix2pix)
+| iOS | Web |
+|:-:|:-:|
+| [<img src="assets/appstore-badge.png" height="50">](https://apps.apple.com/us/app/id6449416200) | [Overflow.ai <br> (Legacy version)](https://overflow.ai/open-eyes-using-pix2pix)
 
 ![](https://github.com/jesusmartinoza/Open-eyes-using-Pix2Pix/blob/master/assets/demo_1.png?raw=true)
 
